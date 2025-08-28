@@ -1,447 +1,431 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="ko">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2575.6">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>관극 DNA 테스트</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- html2canvas CDN for saving as image -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* 기본 폰트 설정 */
+        body {
+            font-family: 'Noto Sans KR', 'Inter', sans-serif;
+        }
+        /* 화면 전환 효과 */
+        .screen {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        .screen.active {
+            display: flex;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* 로딩 스피너 애니메이션 */
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #6366f1;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        /* 추천 목록을 위한 작은 스피너 */
+        .small-loader {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #6366f1;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
 </head>
-<body>
-<p class="p1">&lt;!DOCTYPE html&gt;</p>
-<p class="p1">&lt;html lang="ko"&gt;</p>
-<p class="p1">&lt;head&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;title&gt;관극 DNA 테스트&lt;/title&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- Tailwind CSS CDN --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- html2canvas CDN for saving as image --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"&gt;&lt;/script&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- Google Fonts: Inter --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;link rel="preconnect" href="https://fonts.googleapis.com"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;link rel="preconnect" href="https://fonts.gstatic.com" crossorigin&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&amp;family=Noto+Sans+KR:wght@400;700&amp;display=swap" rel="stylesheet"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;style&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>/* 기본 폰트 설정 */</p>
-<p class="p1"><span class="Apple-converted-space">        </span>body {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-family: 'Noto Sans KR', 'Inter', sans-serif;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>/* 화면 전환 효과 */</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.screen {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>display: none;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>animation: fadeIn 0.5s ease-in-out;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.screen.active {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>display: flex;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>@keyframes fadeIn {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>from { opacity: 0; transform: translateY(10px); }</p>
-<p class="p1"><span class="Apple-converted-space">            </span>to { opacity: 1; transform: translateY(0); }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>/* 로딩 스피너 애니메이션 */</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.loader {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border: 4px solid #f3f3f3;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border-top: 4px solid #6366f1;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 50%;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>width: 40px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>height: 40px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>animation: spin 1s linear infinite;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>/* 추천 목록을 위한 작은 스피너 */</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.small-loader {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border: 3px solid #f3f3f3;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border-top: 3px solid #6366f1;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 50%;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>width: 24px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>height: 24px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>animation: spin 1s linear infinite;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>@keyframes spin {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>0% { transform: rotate(0deg); }</p>
-<p class="p1"><span class="Apple-converted-space">            </span>100% { transform: rotate(360deg); }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</p>
-<p class="p1">&lt;/head&gt;</p>
-<p class="p1">&lt;body class="bg-gray-900 text-white flex items-center justify-center min-h-screen p-4"&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="w-full max-w-md mx-auto"&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- 1. 시작 화면 --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div id="start-screen" class="screen active flex-col items-center text-center p-8 bg-gray-800 rounded-2xl shadow-2xl"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;h1 class="text-3xl font-bold mb-4 text-indigo-400"&gt;나의 관극 DNA 찾기&lt;/h1&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;p class="text-gray-300 mb-8"&gt;총 3번의 이미지 선택으로&lt;br&gt;당신의 숨겨진 공연 취향을 알려드려요.&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;button id="start-btn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-lg transition-transform transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>테스트 시작하기</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- 2. 질문 화면 --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div id="question-screen" class="screen flex-col items-center p-6 bg-gray-800 rounded-2xl shadow-2xl"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;h2 id="question-title" class="text-xl font-bold mb-2 text-center"&gt;가장 마음이 끌리는 장면을 선택해주세요&lt;/h2&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;p id="question-counter" class="text-gray-400 mb-6"&gt;(1/3)&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="w-full grid grid-cols-1 gap-3"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;div id="choice-a" class="choice-item cursor-pointer group relative"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="image-loader-placeholder absolute inset-0 bg-gray-700 rounded-lg flex items-center justify-center"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="loader"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;img id="image-a" src="" alt="선택지 A" class="w-full h-48 object-cover rounded-lg border-2 border-transparent group-hover:border-indigo-500 group-hover:scale-105 transition-all duration-300 opacity-0"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;div id="choice-b" class="choice-item cursor-pointer group relative"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="image-loader-placeholder absolute inset-0 bg-gray-700 rounded-lg flex items-center justify-center"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="loader"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;img id="image-b" src="" alt="선택지 B" class="w-full h-48 object-cover rounded-lg border-2 border-transparent group-hover:border-indigo-500 group-hover:scale-105 transition-all duration-300 opacity-0"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;div id="choice-c" class="choice-item cursor-pointer group relative"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="image-loader-placeholder absolute inset-0 bg-gray-700 rounded-lg flex items-center justify-center"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="loader"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;img id="image-c" src="" alt="선택지 C" class="w-full h-48 object-cover rounded-lg border-2 border-transparent group-hover:border-indigo-500 group-hover:scale-105 transition-all duration-300 opacity-0"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- 3. 분석중 화면 --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div id="loading-screen" class="screen flex-col items-center text-center p-8 bg-gray-800 rounded-2xl shadow-2xl"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="loader mb-6"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;p class="text-lg text-gray-300"&gt;당신의 관극 DNA를&lt;br&gt;분석하고 있습니다...&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- 4. 결과 및 추천 화면 --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div id="result-screen" class="screen flex-col items-center bg-gray-800 rounded-2xl shadow-2xl"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div id="result-capture-area" class="w-full text-center p-8"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;p class="text-gray-400 mb-2"&gt;당신의 관극 DNA는...&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;h1 id="result-title" class="text-3xl font-bold mb-3 text-indigo-400"&gt;&lt;/h1&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;p id="result-description" class="text-gray-300 mb-8"&gt;&lt;/p&gt;</p>
-<p class="p2"><span class="Apple-converted-space">                </span></p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="w-full bg-gray-900/50 p-4 rounded-lg"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h3 class="font-bold mb-4 text-white"&gt;맞춤 공연 추천&lt;/h3&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div id="recommendations" class="space-y-4"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;!-- 추천 공연이 동적으로 추가될 영역 --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="w-full p-8 pt-0 space-y-3"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                 </span>&lt;button id="share-btn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-lg transition-transform transform hover:scale-105"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>결과 공유하기</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;button id="retry-btn" class="w-full bg-gray-700 hover:bg-gray-600 text-gray-300 font-bold py-3 px-4 rounded-lg transition-transform transform hover:scale-105"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>다시 테스트하기</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- 공유하기 모달 --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div id="share-modal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 hidden"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="bg-gray-800 rounded-2xl shadow-2xl p-6 w-full max-w-sm text-center"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;h2 class="text-xl font-bold mb-6"&gt;공유하기&lt;/h2&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="space-y-4"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;button id="copy-link-btn" class="w-full bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-4 rounded-lg"&gt;링크 복사&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;button id="save-image-btn" class="w-full bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-4 rounded-lg"&gt;이미지로 저장&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;button id="close-modal-btn" class="mt-6 text-gray-400 hover:text-white"&gt;닫기&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;script&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>// --- 상태 관리 ---</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const state = {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>currentQuestion: 0,</p>
-<p class="p1"><span class="Apple-converted-space">            </span>scores: {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>spectacle: 0,</p>
-<p class="p1"><span class="Apple-converted-space">                </span>drama: 0,</p>
-<p class="p1"><span class="Apple-converted-space">                </span>thriller: 0,</p>
-<p class="p1"><span class="Apple-converted-space">                </span>comedy: 0,</p>
-<p class="p1"><span class="Apple-converted-space">                </span>arthouse: 0,</p>
-<p class="p1"><span class="Apple-converted-space">            </span>},</p>
-<p class="p1"><span class="Apple-converted-space">        </span>};</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>// --- 데이터 (3단계, 3지선다, 5유형, 이미지 프롬프트 개선) ---</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const quizData = [</p>
-<p class="p1"><span class="Apple-converted-space">            </span>{ // 1. 선호하는 스토리</p>
-<p class="p1"><span class="Apple-converted-space">                </span>choices: [</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>{ type: 'drama', imagePrompt: 'Stage photography of a realistic, emotional scene from a family drama. Actors show deep connection and subtle emotions under soft, warm theatrical lighting. The set is a cozy, detailed living room.' },</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>{ type: 'thriller', imagePrompt: 'Stage photography of a tense psychological thriller. A single character is caught in a web of shadows and light, their face showing fear and paranoia. The atmosphere is dark and mysterious, captured during a live performance.' },</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>{ type: 'spectacle', imagePrompt: 'Stage photography of an epic fantasy musical. A hero stands on a cliff, sword raised, facing a massive, glowing dragon projection on the backdrop. The lighting is dramatic and colorful.' },</p>
-<p class="p1"><span class="Apple-converted-space">                </span>],</p>
-<p class="p1"><span class="Apple-converted-space">            </span>},</p>
-<p class="p1"><span class="Apple-converted-space">            </span>{ // 2. 선호하는 비주얼</p>
-<p class="p1"><span class="Apple-converted-space">                </span>choices: [</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>{ type: 'arthouse', imagePrompt: 'Stage photography of an avant-garde play. Performers in abstract, sculptural costumes move across a minimalist stage with symbolic video art projected behind them. The composition is artistic and unconventional.' },</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>{ type: 'spectacle', imagePrompt: 'Stage photography of a massive, technologically advanced stage set for a fantasy musical. A colossal castle structure with waterfalls and dramatic, cool-toned lighting fills the entire stage. The focus is on the breathtaking scale and epic architecture of the set itself.' },</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>{ type: 'comedy', imagePrompt: 'Stage photography of a physical comedy scene. Two actors in mismatched, quirky outfits are slipping on a banana peel on a brightly lit, simple stage. Their expressions are comically exaggerated and the moment is pure slapstick.' },</p>
-<p class="p1"><span class="Apple-converted-space">                </span>],</p>
-<p class="p1"><span class="Apple-converted-space">            </span>},</p>
-<p class="p1"><span class="Apple-converted-space">            </span>{ // 3. 선호하는 에너지</p>
-<p class="p1"><span class="Apple-converted-space">                </span>choices: [</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>{ type: 'comedy', imagePrompt: 'Stage photography of a lively, energetic comedy scene. The audience is visibly laughing as actors engage in witty, fast-paced dialogue. The atmosphere is uplifting and fun.' },</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>{ type: 'thriller', imagePrompt: 'Stage photography of a suspenseful, intense scene. A character hides behind a curtain as a menacing shadow looms on the wall. The theatrical lighting creates high contrast and a sense of danger.' },</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>{ type: 'drama', imagePrompt: 'Stage photography of a calm, profound, and moving scene. Two actors sit on a simple bench, sharing an intimate, heartfelt moment. The lighting is gentle, focusing on their emotional expressions.' },</p>
-<p class="p1"><span class="Apple-converted-space">                </span>],</p>
-<p class="p1"><span class="Apple-converted-space">            </span>},</p>
-<p class="p1"><span class="Apple-converted-space">        </span>];</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>const resultData = {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>spectacle: {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>title: '#스펙터클 판타지형',</p>
-<p class="p1"><span class="Apple-converted-space">                </span>description: '압도적인 스케일과 화려한 시각효과, 웅장한 음악이 당신의 심장을 뛰게 하는군요! 일상에서 벗어나 환상적인 세계에 빠져들고 싶어 합니다.',</p>
-<p class="p1"><span class="Apple-converted-space">                </span>recommendations: [</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>{ title: '뮤지컬 〈헤드윅〉', url: 'https://tickets.interpark.com/goods/24007843', imagePrompt: "An artistic poster for the musical 'Hedwig'. A glamorous rock singer with a blonde wig is singing passionately on stage under dazzling lights. The style is punk rock and vibrant." },</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>{ title: '뮤지컬 〈하데스타운〉', url: 'https://tickets.interpark.com/goods/24006322', imagePrompt: "A mythical poster for the musical 'Hadestown'. A man with a guitar walks on a railroad track towards a dark, industrial underworld. The style is moody and epic." },</p>
-<p class="p1"><span class="Apple-converted-space">                </span>],</p>
-<p class="p1"><span class="Apple-converted-space">            </span>},</p>
-<p class="p1"><span class="Apple-converted-space">            </span>drama: {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>title: '#현실 공감 드라마형',</p>
-<p class="p1"><span class="Apple-converted-space">                </span>description: '탄탄한 스토리와 인물들의 섬세한 감정선에 깊게 몰입하는군요. 우리 주변에 있을 법한 이야기 속에서 따뜻한 위로와 깊은 감동을 얻고 싶어 합니다.',</p>
-<p class="p1"><span class="Apple-converted-space">                </span>recommendations: [</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>{ title: '뮤지컬 〈디어 에반 핸슨〉', url: 'https://tickets.interpark.com/goods/24003117', imagePrompt: "A touching poster for the musical 'Dear Evan Hansen'. A lonely boy in a striped polo shirt stands in a sea of social media feeds. The style is modern and emotional." },</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>{ title: '연극 〈여기, 피화당〉', url: 'https://tickets.interpark.com/goods/24007604', imagePrompt: "A historical drama poster for the play 'Here, Pihwadang'. Women in beautiful, traditional Korean hanbok are gathered in a serene pavilion. The style is elegant and poignant." },</p>
-<p class="p1"><span class="Apple-converted-space">                </span>],</p>
-<p class="p1"><span class="Apple-converted-space">            </span>},</p>
-<p class="p1"><span class="Apple-converted-space">             </span>thriller: {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>title: '#두뇌 자극 스릴러형',</p>
-<p class="p1"><span class="Apple-converted-space">                </span>description: '예측 불가능한 전개와 인물 간의 팽팽한 심리전을 즐기는군요. 다음 장면을 추리하며 심장이 쫄깃해지는 긴장감을 즐기는 당신은 진정한 스릴러 마니아!',</p>
-<p class="p1"><span class="Apple-converted-space">                </span>recommendations: [</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>{ title: '뮤지컬 〈프랑켄슈타인〉', url: 'https://tickets.interpark.com/goods/24006511', imagePrompt: "A dark, gothic poster for the musical 'Frankenstein'. A scientist and his monstrous creation are surrounded by lightning and laboratory equipment. The style is intense and dramatic." },</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>{ title: '뮤지컬 〈지킬앤하이드〉', url: 'https://tickets.interpark.com/goods/24007238', imagePrompt: "A dramatic, artistic poster for the musical 'Jekyll &amp; Hyde'. A split-face portrait, half a gentleman, half a monster, with a swirling red and black smoke background. The title 'JEKYLL &amp; HYDE' is in a gothic, distorted font." },</p>
-<p class="p1"><span class="Apple-converted-space">                </span>],</p>
-<p class="p1"><span class="Apple-converted-space">            </span>},</p>
-<p class="p1"><span class="Apple-converted-space">            </span>comedy: {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>title: '#유쾌한 코미디형',</p>
-<p class="p1"><span class="Apple-converted-space">                </span>description: '복잡한 생각은 잠시 내려놓고, 마음껏 웃고 즐길 수 있는 시간을 원하는군요! 재치 있는 대사와 유쾌한 상황 속에서 스트레스를 날려버리고 싶어 합니다.',</p>
-<p class="p1"><span class="Apple-converted-space">                </span>recommendations: [</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>{ title: '뮤지컬 〈김종욱 찾기〉', url: 'https://tickets.interpark.com/goods/23005046', imagePrompt: "A romantic comedy poster for the musical 'Finding Mr. Destiny'. A man and a woman are looking for someone in a crowded, colorful airport. The style is bright and lovely." },</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>{ title: '뮤지컬 〈알사탕〉', url: 'https://tickets.interpark.com/goods/24006199', imagePrompt: "A sweet, whimsical poster for the family musical 'Magic Candy'. A child is listening to a magical, glowing candy. The style is cute and imaginative." },</p>
-<p class="p1"><span class="Apple-converted-space">                </span>],</p>
-<p class="p1"><span class="Apple-converted-space">            </span>},</p>
-<p class="p1"><span class="Apple-converted-space">            </span>arthouse: {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>title: '#아트하우스 실험극형',</p>
-<p class="p1"><span class="Apple-converted-space">                </span>description: '정형화된 틀을 벗어난 새로운 형식과 상징적인 미장센에 매력을 느끼는군요. 감독의 독창적인 해석을 곱씹으며 예술적 영감을 얻고 싶어 합니다.',</p>
-<p class="p1"><span class="Apple-converted-space">                </span>recommendations: [</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>{ title: '뮤지컬 〈시카고〉', url: 'https://tickets.interpark.com/goods/24005813', imagePrompt: "A stylish, minimalist poster for the musical 'Chicago'. Two women in black flapper dresses are posing under a single spotlight. The style is sexy, iconic, and bold." },</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>{ title: '이머시브 씨어터 ‘까르네’', url: 'https://tickets.interpark.com/goods/24008271', imagePrompt: "An abstract, immersive theater poster for 'Carne'. Masked performers are interacting with the audience in a mysterious, dim space. The style is surreal and interactive." },</p>
-<p class="p1"><span class="Apple-converted-space">                </span>],</p>
-<p class="p1"><span class="Apple-converted-space">            </span>},</p>
-<p class="p1"><span class="Apple-converted-space">        </span>};</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>// --- DOM 요소 ---</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const screens = {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>start: document.getElementById('start-screen'),</p>
-<p class="p1"><span class="Apple-converted-space">            </span>question: document.getElementById('question-screen'),</p>
-<p class="p1"><span class="Apple-converted-space">            </span>loading: document.getElementById('loading-screen'),</p>
-<p class="p1"><span class="Apple-converted-space">            </span>result: document.getElementById('result-screen'),</p>
-<p class="p1"><span class="Apple-converted-space">        </span>};</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>const startBtn = document.getElementById('start-btn');</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const questionCounter = document.getElementById('question-counter');</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const imageElements = {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>a: document.getElementById('image-a'),</p>
-<p class="p1"><span class="Apple-converted-space">            </span>b: document.getElementById('image-b'),</p>
-<p class="p1"><span class="Apple-converted-space">            </span>c: document.getElementById('image-c'),</p>
-<p class="p1"><span class="Apple-converted-space">        </span>};</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const choiceElements = {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>a: document.getElementById('choice-a'),</p>
-<p class="p1"><span class="Apple-converted-space">            </span>b: document.getElementById('choice-b'),</p>
-<p class="p1"><span class="Apple-converted-space">            </span>c: document.getElementById('choice-c'),</p>
-<p class="p1"><span class="Apple-converted-space">        </span>};</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const resultTitle = document.getElementById('result-title');</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const resultDescription = document.getElementById('result-description');</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const recommendationsContainer = document.getElementById('recommendations');</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const retryBtn = document.getElementById('retry-btn');</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const shareBtn = document.getElementById('share-btn');</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const shareModal = document.getElementById('share-modal');</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const closeModalBtn = document.getElementById('close-modal-btn');</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const copyLinkBtn = document.getElementById('copy-link-btn');</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const saveImageBtn = document.getElementById('save-image-btn');</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const resultCaptureArea = document.getElementById('result-capture-area');</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>// --- AI 이미지 생성 API 호출 함수 ---</p>
-<p class="p1"><span class="Apple-converted-space">        </span>async function generateImageAPI(prompt, retries = 3, delay = 1000) {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const apiKey = ""; // API 키는 비워둡니다.</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-002:predict?key=${apiKey}`;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const payload = { instances: [{ prompt: prompt }], parameters: { "sampleCount": 1 } };</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>for (let i = 0; i &lt; retries; i++) {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>try {</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>const response = await fetch(apiUrl, {</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>method: 'POST',</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>headers: { 'Content-Type': 'application/json' },</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>body: JSON.stringify(payload)</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>});</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);</p>
-<p class="p2"><span class="Apple-converted-space">                    </span></p>
-<p class="p1"><span class="Apple-converted-space">                    </span>const result = await response.json();</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>if (result.predictions &amp;&amp; result.predictions[0]?.bytesBase64Encoded) {</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>return `data:image/png;base64,${result.predictions[0].bytesBase64Encoded}`;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>} else {</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>console.error('Invalid response structure from Image API:', JSON.stringify(result, null, 2));</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>throw new Error('Invalid response structure from Image API');</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>}</p>
-<p class="p1"><span class="Apple-converted-space">                </span>} catch (error) {</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>console.error(`Image API call failed (attempt ${i + 1}):`, error);</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>if (i === retries - 1) return 'https://placehold.co/600x400/ef4444/ffffff?text=Error'; // Fallback image</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>await new Promise(res =&gt; setTimeout(res, delay * Math.pow(2, i)));</p>
-<p class="p1"><span class="Apple-converted-space">                </span>}</p>
-<p class="p1"><span class="Apple-converted-space">            </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>// --- 핵심 로직 함수 ---</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>function showScreen(screenId) {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>Object.values(screens).forEach(screen =&gt; screen.classList.remove('active'));</p>
-<p class="p1"><span class="Apple-converted-space">            </span>screens[screenId].classList.add('active');</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>async function renderQuestion() {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const q = quizData[state.currentQuestion];</p>
-<p class="p1"><span class="Apple-converted-space">            </span>questionCounter.textContent = `(${state.currentQuestion + 1}/${quizData.length})`;</p>
-<p class="p2"><span class="Apple-converted-space">            </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>Object.values(imageElements).forEach(img =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>img.classList.add('opacity-0');</p>
-<p class="p1"><span class="Apple-converted-space">                </span>img.previousElementSibling.classList.remove('hidden');</p>
-<p class="p1"><span class="Apple-converted-space">            </span>});</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>const imagePromises = q.choices.map(choice =&gt; generateImageAPI(choice.imagePrompt));</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const imageSources = await Promise.all(imagePromises);</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>imageSources.forEach((src, index) =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>const key = Object.keys(imageElements)[index];</p>
-<p class="p1"><span class="Apple-converted-space">                </span>const imgEl = imageElements[key];</p>
-<p class="p1"><span class="Apple-converted-space">                </span>const choiceEl = choiceElements[key];</p>
-<p class="p2"><span class="Apple-converted-space">                </span></p>
-<p class="p1"><span class="Apple-converted-space">                </span>imgEl.src = src;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>choiceEl.dataset.type = q.choices[index].type;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">                </span>imgEl.onload = () =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>imgEl.classList.remove('opacity-0');</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>imgEl.previousElementSibling.classList.add('hidden');</p>
-<p class="p1"><span class="Apple-converted-space">                </span>};</p>
-<p class="p1"><span class="Apple-converted-space">            </span>});</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>function calculateResult() {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>// 가장 높은 점수를 받은 유형을 찾습니다. 동점일 경우 먼저 나온 유형이 선택됩니다.</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const resultType = Object.keys(state.scores).reduce((a, b) =&gt; state.scores[a] &gt;= state.scores[b] ? a : b);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>return resultData[resultType];</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>async function renderResult(result) {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>resultTitle.textContent = result.title;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>resultDescription.textContent = result.description;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>recommendationsContainer.innerHTML = '';</p>
-<p class="p2"><span class="Apple-converted-space">            </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>result.recommendations.forEach((rec, index) =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>const recEl = document.createElement('a');</p>
-<p class="p1"><span class="Apple-converted-space">                </span>recEl.href = rec.url;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>recEl.target = '_blank';</p>
-<p class="p1"><span class="Apple-converted-space">                </span>recEl.rel = 'noopener noreferrer';</p>
-<p class="p1"><span class="Apple-converted-space">                </span>recEl.className = 'flex items-center bg-gray-700/50 p-3 rounded-lg hover:bg-gray-700 transition-colors';</p>
-<p class="p1"><span class="Apple-converted-space">                </span>recEl.innerHTML = `</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="w-12 h-16 mr-4 relative"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="image-loader-placeholder absolute inset-0 bg-gray-700/50 rounded-md flex items-center justify-center"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                           </span>&lt;div class="small-loader"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;img id="rec-image-${index}" src="" alt="${rec.title}" class="w-12 h-16 object-cover rounded-md opacity-0 transition-opacity"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;span class="font-bold text-white"&gt;${rec.title}&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>`;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>recommendationsContainer.appendChild(recEl);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>});</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>result.recommendations.forEach(async (rec, index) =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>const imageUrl = await generateImageAPI(rec.imagePrompt);</p>
-<p class="p1"><span class="Apple-converted-space">                </span>const imgEl = document.getElementById(`rec-image-${index}`);</p>
-<p class="p1"><span class="Apple-converted-space">                </span>imgEl.src = imageUrl;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>imgEl.onload = () =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>imgEl.classList.remove('opacity-0');</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>imgEl.parentElement.querySelector('.image-loader-placeholder').classList.add('hidden');</p>
-<p class="p1"><span class="Apple-converted-space">                </span>};</p>
-<p class="p1"><span class="Apple-converted-space">            </span>});</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><span class="Apple-converted-space">        </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>function handleChoice(type) {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>state.scores[type]++;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>state.currentQuestion++;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>if (state.currentQuestion &lt; quizData.length) {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>renderQuestion();</p>
-<p class="p1"><span class="Apple-converted-space">            </span>} else {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>showScreen('loading');</p>
-<p class="p1"><span class="Apple-converted-space">                </span>setTimeout(() =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>const result = calculateResult();</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>renderResult(result);</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>showScreen('result');</p>
-<p class="p1"><span class="Apple-converted-space">                </span>}, 2000);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><span class="Apple-converted-space">        </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>function resetTest() {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>state.currentQuestion = 0;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>state.scores = { spectacle: 0, drama: 0, thriller: 0, comedy: 0, arthouse: 0 };</p>
-<p class="p1"><span class="Apple-converted-space">            </span>showScreen('start');</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>// --- 공유 기능 함수 ---</p>
-<p class="p1"><span class="Apple-converted-space">        </span>function copyLink() {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const textToCopy = `나의 관극 DNA는 '${resultTitle.textContent}'! 당신의 공연 취향도 알아보세요! \n${window.location.href}`;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const textArea = document.createElement('textarea');</p>
-<p class="p1"><span class="Apple-converted-space">            </span>textArea.value = textToCopy;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>document.body.appendChild(textArea);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>textArea.select();</p>
-<p class="p1"><span class="Apple-converted-space">            </span>document.execCommand('copy');</p>
-<p class="p1"><span class="Apple-converted-space">            </span>document.body.removeChild(textArea);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const originalText = copyLinkBtn.textContent;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>copyLinkBtn.textContent = '복사 완료!';</p>
-<p class="p1"><span class="Apple-converted-space">            </span>setTimeout(() =&gt; { copyLinkBtn.textContent = originalText; }, 2000);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>function saveAsImage() {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const originalText = saveImageBtn.textContent;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>saveImageBtn.textContent = '저장 중...';</p>
-<p class="p1"><span class="Apple-converted-space">            </span>html2canvas(resultCaptureArea, { backgroundColor: '#1f2937', useCORS: true }).then(canvas =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>const link = document.createElement('a');</p>
-<p class="p1"><span class="Apple-converted-space">                </span>link.download = '나의-관극-DNA.png';</p>
-<p class="p1"><span class="Apple-converted-space">                </span>link.href = canvas.toDataURL('image/png');</p>
-<p class="p1"><span class="Apple-converted-space">                </span>link.click();</p>
-<p class="p1"><span class="Apple-converted-space">                </span>saveImageBtn.textContent = originalText;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>}).catch(err =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>console.error('oops, something went wrong!', err);</p>
-<p class="p1"><span class="Apple-converted-space">                </span>alert('이미지 저장에 실패했습니다.');</p>
-<p class="p1"><span class="Apple-converted-space">                </span>saveImageBtn.textContent = originalText;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>});</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>// --- 이벤트 리스너 ---</p>
-<p class="p1"><span class="Apple-converted-space">        </span>startBtn.addEventListener('click', () =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>renderQuestion();</p>
-<p class="p1"><span class="Apple-converted-space">            </span>showScreen('question');</p>
-<p class="p1"><span class="Apple-converted-space">        </span>});</p>
-<p class="p2"><span class="Apple-converted-space">        </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>document.querySelectorAll('.choice-item').forEach(item =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>item.addEventListener('click', (event) =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>const type = event.currentTarget.dataset.type;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>if(type) {</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>handleChoice(type);</p>
-<p class="p1"><span class="Apple-converted-space">                </span>}</p>
-<p class="p1"><span class="Apple-converted-space">            </span>});</p>
-<p class="p1"><span class="Apple-converted-space">        </span>});</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>retryBtn.addEventListener('click', resetTest);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>shareBtn.addEventListener('click', () =&gt; shareModal.classList.remove('hidden'));</p>
-<p class="p1"><span class="Apple-converted-space">        </span>closeModalBtn.addEventListener('click', () =&gt; shareModal.classList.add('hidden'));</p>
-<p class="p1"><span class="Apple-converted-space">        </span>copyLinkBtn.addEventListener('click', copyLink);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>saveImageBtn.addEventListener('click', saveAsImage);</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</p>
-<p class="p1">&lt;/body&gt;</p>
-<p class="p1">&lt;/html&gt;</p>
+<body class="bg-gray-900 text-white flex items-center justify-center min-h-screen p-4">
+
+    <div class="w-full max-w-md mx-auto">
+
+        <!-- 1. 시작 화면 -->
+        <div id="start-screen" class="screen active flex-col items-center text-center p-8 bg-gray-800 rounded-2xl shadow-2xl">
+            <h1 class="text-3xl font-bold mb-4 text-indigo-400">나의 관극 DNA 찾기</h1>
+            <p class="text-gray-300 mb-8">총 3번의 이미지 선택으로<br>당신의 숨겨진 공연 취향을 알려드려요.</p>
+            <button id="start-btn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-lg transition-transform transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50">
+                테스트 시작하기
+            </button>
+        </div>
+
+        <!-- 2. 질문 화면 -->
+        <div id="question-screen" class="screen flex-col items-center p-6 bg-gray-800 rounded-2xl shadow-2xl">
+            <h2 id="question-title" class="text-xl font-bold mb-2 text-center">가장 마음이 끌리는 장면을 선택해주세요</h2>
+            <p id="question-counter" class="text-gray-400 mb-6">(1/3)</p>
+            <div class="w-full grid grid-cols-1 gap-3">
+                <div id="choice-a" class="choice-item cursor-pointer group relative">
+                    <div class="image-loader-placeholder absolute inset-0 bg-gray-700 rounded-lg flex items-center justify-center">
+                        <div class="loader"></div>
+                    </div>
+                    <img id="image-a" src="" alt="선택지 A" class="w-full h-48 object-cover rounded-lg border-2 border-transparent group-hover:border-indigo-500 group-hover:scale-105 transition-all duration-300 opacity-0">
+                </div>
+                <div id="choice-b" class="choice-item cursor-pointer group relative">
+                    <div class="image-loader-placeholder absolute inset-0 bg-gray-700 rounded-lg flex items-center justify-center">
+                        <div class="loader"></div>
+                    </div>
+                    <img id="image-b" src="" alt="선택지 B" class="w-full h-48 object-cover rounded-lg border-2 border-transparent group-hover:border-indigo-500 group-hover:scale-105 transition-all duration-300 opacity-0">
+                </div>
+                <div id="choice-c" class="choice-item cursor-pointer group relative">
+                    <div class="image-loader-placeholder absolute inset-0 bg-gray-700 rounded-lg flex items-center justify-center">
+                        <div class="loader"></div>
+                    </div>
+                    <img id="image-c" src="" alt="선택지 C" class="w-full h-48 object-cover rounded-lg border-2 border-transparent group-hover:border-indigo-500 group-hover:scale-105 transition-all duration-300 opacity-0">
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. 분석중 화면 -->
+        <div id="loading-screen" class="screen flex-col items-center text-center p-8 bg-gray-800 rounded-2xl shadow-2xl">
+            <div class="loader mb-6"></div>
+            <p class="text-lg text-gray-300">당신의 관극 DNA를<br>분석하고 있습니다...</p>
+        </div>
+
+        <!-- 4. 결과 및 추천 화면 -->
+        <div id="result-screen" class="screen flex-col items-center bg-gray-800 rounded-2xl shadow-2xl">
+            <div id="result-capture-area" class="w-full text-center p-8">
+                <p class="text-gray-400 mb-2">당신의 관극 DNA는...</p>
+                <h1 id="result-title" class="text-3xl font-bold mb-3 text-indigo-400"></h1>
+                <p id="result-description" class="text-gray-300 mb-8"></p>
+                
+                <div class="w-full bg-gray-900/50 p-4 rounded-lg">
+                    <h3 class="font-bold mb-4 text-white">맞춤 공연 추천</h3>
+                    <div id="recommendations" class="space-y-4">
+                        <!-- 추천 공연이 동적으로 추가될 영역 -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="w-full p-8 pt-0 space-y-3">
+                 <button id="share-btn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-lg transition-transform transform hover:scale-105">
+                    결과 공유하기
+                </button>
+                <button id="retry-btn" class="w-full bg-gray-700 hover:bg-gray-600 text-gray-300 font-bold py-3 px-4 rounded-lg transition-transform transform hover:scale-105">
+                    다시 테스트하기
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 공유하기 모달 -->
+    <div id="share-modal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 hidden">
+        <div class="bg-gray-800 rounded-2xl shadow-2xl p-6 w-full max-w-sm text-center">
+            <h2 class="text-xl font-bold mb-6">공유하기</h2>
+            <div class="space-y-4">
+                <button id="copy-link-btn" class="w-full bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-4 rounded-lg">링크 복사</button>
+                <button id="save-image-btn" class="w-full bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-4 rounded-lg">이미지로 저장</button>
+            </div>
+            <button id="close-modal-btn" class="mt-6 text-gray-400 hover:text-white">닫기</button>
+        </div>
+    </div>
+
+
+    <script>
+        // --- 상태 관리 ---
+        const state = {
+            currentQuestion: 0,
+            scores: {
+                spectacle: 0,
+                drama: 0,
+                thriller: 0,
+                comedy: 0,
+                arthouse: 0,
+            },
+        };
+
+        // --- 데이터 (3단계, 3지선다, 5유형, 이미지 프롬프트 개선) ---
+        const quizData = [
+            { // 1. 선호하는 스토리
+                choices: [
+                    { type: 'drama', imagePrompt: 'Stage photography of a realistic, emotional scene from a family drama. Actors show deep connection and subtle emotions under soft, warm theatrical lighting. The set is a cozy, detailed living room.' },
+                    { type: 'thriller', imagePrompt: 'Stage photography of a tense psychological thriller. A single character is caught in a web of shadows and light, their face showing fear and paranoia. The atmosphere is dark and mysterious, captured during a live performance.' },
+                    { type: 'spectacle', imagePrompt: 'Stage photography of an epic fantasy musical. A hero stands on a cliff, sword raised, facing a massive, glowing dragon projection on the backdrop. The lighting is dramatic and colorful.' },
+                ],
+            },
+            { // 2. 선호하는 비주얼
+                choices: [
+                    { type: 'arthouse', imagePrompt: 'Stage photography of an avant-garde play. Performers in abstract, sculptural costumes move across a minimalist stage with symbolic video art projected behind them. The composition is artistic and unconventional.' },
+                    { type: 'spectacle', imagePrompt: 'Stage photography of a massive, technologically advanced stage set for a fantasy musical. A colossal castle structure with waterfalls and dramatic, cool-toned lighting fills the entire stage. The focus is on the breathtaking scale and epic architecture of the set itself.' },
+                    { type: 'comedy', imagePrompt: 'Stage photography of a physical comedy scene. Two actors in mismatched, quirky outfits are slipping on a banana peel on a brightly lit, simple stage. Their expressions are comically exaggerated and the moment is pure slapstick.' },
+                ],
+            },
+            { // 3. 선호하는 에너지
+                choices: [
+                    { type: 'comedy', imagePrompt: 'Stage photography of a lively, energetic comedy scene. The audience is visibly laughing as actors engage in witty, fast-paced dialogue. The atmosphere is uplifting and fun.' },
+                    { type: 'thriller', imagePrompt: 'Stage photography of a suspenseful, intense scene. A character hides behind a curtain as a menacing shadow looms on the wall. The theatrical lighting creates high contrast and a sense of danger.' },
+                    { type: 'drama', imagePrompt: 'Stage photography of a calm, profound, and moving scene. Two actors sit on a simple bench, sharing an intimate, heartfelt moment. The lighting is gentle, focusing on their emotional expressions.' },
+                ],
+            },
+        ];
+
+        const resultData = {
+            spectacle: {
+                title: '#스펙터클 판타지형',
+                description: '압도적인 스케일과 화려한 시각효과, 웅장한 음악이 당신의 심장을 뛰게 하는군요! 일상에서 벗어나 환상적인 세계에 빠져들고 싶어 합니다.',
+                recommendations: [
+                    { title: '뮤지컬 〈헤드윅〉', url: 'https://tickets.interpark.com/goods/24007843', imagePrompt: "An artistic poster for the musical 'Hedwig'. A glamorous rock singer with a blonde wig is singing passionately on stage under dazzling lights. The style is punk rock and vibrant." },
+                    { title: '뮤지컬 〈하데스타운〉', url: 'https://tickets.interpark.com/goods/24006322', imagePrompt: "A mythical poster for the musical 'Hadestown'. A man with a guitar walks on a railroad track towards a dark, industrial underworld. The style is moody and epic." },
+                ],
+            },
+            drama: {
+                title: '#현실 공감 드라마형',
+                description: '탄탄한 스토리와 인물들의 섬세한 감정선에 깊게 몰입하는군요. 우리 주변에 있을 법한 이야기 속에서 따뜻한 위로와 깊은 감동을 얻고 싶어 합니다.',
+                recommendations: [
+                    { title: '뮤지컬 〈디어 에반 핸슨〉', url: 'https://tickets.interpark.com/goods/24003117', imagePrompt: "A touching poster for the musical 'Dear Evan Hansen'. A lonely boy in a striped polo shirt stands in a sea of social media feeds. The style is modern and emotional." },
+                    { title: '연극 〈여기, 피화당〉', url: 'https://tickets.interpark.com/goods/24007604', imagePrompt: "A historical drama poster for the play 'Here, Pihwadang'. Women in beautiful, traditional Korean hanbok are gathered in a serene pavilion. The style is elegant and poignant." },
+                ],
+            },
+             thriller: {
+                title: '#두뇌 자극 스릴러형',
+                description: '예측 불가능한 전개와 인물 간의 팽팽한 심리전을 즐기는군요. 다음 장면을 추리하며 심장이 쫄깃해지는 긴장감을 즐기는 당신은 진정한 스릴러 마니아!',
+                recommendations: [
+                    { title: '뮤지컬 〈프랑켄슈타인〉', url: 'https://tickets.interpark.com/goods/24006511', imagePrompt: "A dark, gothic poster for the musical 'Frankenstein'. A scientist and his monstrous creation are surrounded by lightning and laboratory equipment. The style is intense and dramatic." },
+                    { title: '뮤지컬 〈지킬앤하이드〉', url: 'https://tickets.interpark.com/goods/24007238', imagePrompt: "A dramatic, artistic poster for the musical 'Jekyll & Hyde'. A split-face portrait, half a gentleman, half a monster, with a swirling red and black smoke background. The title 'JEKYLL & HYDE' is in a gothic, distorted font." },
+                ],
+            },
+            comedy: {
+                title: '#유쾌한 코미디형',
+                description: '복잡한 생각은 잠시 내려놓고, 마음껏 웃고 즐길 수 있는 시간을 원하는군요! 재치 있는 대사와 유쾌한 상황 속에서 스트레스를 날려버리고 싶어 합니다.',
+                recommendations: [
+                    { title: '뮤지컬 〈김종욱 찾기〉', url: 'https://tickets.interpark.com/goods/23005046', imagePrompt: "A romantic comedy poster for the musical 'Finding Mr. Destiny'. A man and a woman are looking for someone in a crowded, colorful airport. The style is bright and lovely." },
+                    { title: '뮤지컬 〈알사탕〉', url: 'https://tickets.interpark.com/goods/24006199', imagePrompt: "A sweet, whimsical poster for the family musical 'Magic Candy'. A child is listening to a magical, glowing candy. The style is cute and imaginative." },
+                ],
+            },
+            arthouse: {
+                title: '#아트하우스 실험극형',
+                description: '정형화된 틀을 벗어난 새로운 형식과 상징적인 미장센에 매력을 느끼는군요. 감독의 독창적인 해석을 곱씹으며 예술적 영감을 얻고 싶어 합니다.',
+                recommendations: [
+                    { title: '뮤지컬 〈시카고〉', url: 'https://tickets.interpark.com/goods/24005813', imagePrompt: "A stylish, minimalist poster for the musical 'Chicago'. Two women in black flapper dresses are posing under a single spotlight. The style is sexy, iconic, and bold." },
+                    { title: '이머시브 씨어터 ‘까르네’', url: 'https://tickets.interpark.com/goods/24008271', imagePrompt: "An abstract, immersive theater poster for 'Carne'. Masked performers are interacting with the audience in a mysterious, dim space. The style is surreal and interactive." },
+                ],
+            },
+        };
+
+        // --- DOM 요소 ---
+        const screens = {
+            start: document.getElementById('start-screen'),
+            question: document.getElementById('question-screen'),
+            loading: document.getElementById('loading-screen'),
+            result: document.getElementById('result-screen'),
+        };
+
+        const startBtn = document.getElementById('start-btn');
+        const questionCounter = document.getElementById('question-counter');
+        const imageElements = {
+            a: document.getElementById('image-a'),
+            b: document.getElementById('image-b'),
+            c: document.getElementById('image-c'),
+        };
+        const choiceElements = {
+            a: document.getElementById('choice-a'),
+            b: document.getElementById('choice-b'),
+            c: document.getElementById('choice-c'),
+        };
+        const resultTitle = document.getElementById('result-title');
+        const resultDescription = document.getElementById('result-description');
+        const recommendationsContainer = document.getElementById('recommendations');
+        const retryBtn = document.getElementById('retry-btn');
+        const shareBtn = document.getElementById('share-btn');
+        const shareModal = document.getElementById('share-modal');
+        const closeModalBtn = document.getElementById('close-modal-btn');
+        const copyLinkBtn = document.getElementById('copy-link-btn');
+        const saveImageBtn = document.getElementById('save-image-btn');
+        const resultCaptureArea = document.getElementById('result-capture-area');
+
+        // --- AI 이미지 생성 API 호출 함수 ---
+        async function generateImageAPI(prompt, retries = 3, delay = 1000) {
+            const apiKey = ""; // API 키는 비워둡니다.
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-002:predict?key=${apiKey}`;
+            const payload = { instances: [{ prompt: prompt }], parameters: { "sampleCount": 1 } };
+
+            for (let i = 0; i < retries; i++) {
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                    
+                    const result = await response.json();
+                    if (result.predictions && result.predictions[0]?.bytesBase64Encoded) {
+                        return `data:image/png;base64,${result.predictions[0].bytesBase64Encoded}`;
+                    } else {
+                        console.error('Invalid response structure from Image API:', JSON.stringify(result, null, 2));
+                        throw new Error('Invalid response structure from Image API');
+                    }
+                } catch (error) {
+                    console.error(`Image API call failed (attempt ${i + 1}):`, error);
+                    if (i === retries - 1) return 'https://placehold.co/600x400/ef4444/ffffff?text=Error'; // Fallback image
+                    await new Promise(res => setTimeout(res, delay * Math.pow(2, i)));
+                }
+            }
+        }
+
+        // --- 핵심 로직 함수 ---
+
+        function showScreen(screenId) {
+            Object.values(screens).forEach(screen => screen.classList.remove('active'));
+            screens[screenId].classList.add('active');
+        }
+
+        async function renderQuestion() {
+            const q = quizData[state.currentQuestion];
+            questionCounter.textContent = `(${state.currentQuestion + 1}/${quizData.length})`;
+            
+            Object.values(imageElements).forEach(img => {
+                img.classList.add('opacity-0');
+                img.previousElementSibling.classList.remove('hidden');
+            });
+
+            const imagePromises = q.choices.map(choice => generateImageAPI(choice.imagePrompt));
+            const imageSources = await Promise.all(imagePromises);
+
+            imageSources.forEach((src, index) => {
+                const key = Object.keys(imageElements)[index];
+                const imgEl = imageElements[key];
+                const choiceEl = choiceElements[key];
+                
+                imgEl.src = src;
+                choiceEl.dataset.type = q.choices[index].type;
+
+                imgEl.onload = () => {
+                    imgEl.classList.remove('opacity-0');
+                    imgEl.previousElementSibling.classList.add('hidden');
+                };
+            });
+        }
+
+        function calculateResult() {
+            // 가장 높은 점수를 받은 유형을 찾습니다. 동점일 경우 먼저 나온 유형이 선택됩니다.
+            const resultType = Object.keys(state.scores).reduce((a, b) => state.scores[a] >= state.scores[b] ? a : b);
+            return resultData[resultType];
+        }
+
+        async function renderResult(result) {
+            resultTitle.textContent = result.title;
+            resultDescription.textContent = result.description;
+            recommendationsContainer.innerHTML = '';
+            
+            result.recommendations.forEach((rec, index) => {
+                const recEl = document.createElement('a');
+                recEl.href = rec.url;
+                recEl.target = '_blank';
+                recEl.rel = 'noopener noreferrer';
+                recEl.className = 'flex items-center bg-gray-700/50 p-3 rounded-lg hover:bg-gray-700 transition-colors';
+                recEl.innerHTML = `
+                    <div class="w-12 h-16 mr-4 relative">
+                        <div class="image-loader-placeholder absolute inset-0 bg-gray-700/50 rounded-md flex items-center justify-center">
+                           <div class="small-loader"></div>
+                        </div>
+                        <img id="rec-image-${index}" src="" alt="${rec.title}" class="w-12 h-16 object-cover rounded-md opacity-0 transition-opacity">
+                    </div>
+                    <span class="font-bold text-white">${rec.title}</span>
+                `;
+                recommendationsContainer.appendChild(recEl);
+            });
+
+            result.recommendations.forEach(async (rec, index) => {
+                const imageUrl = await generateImageAPI(rec.imagePrompt);
+                const imgEl = document.getElementById(`rec-image-${index}`);
+                imgEl.src = imageUrl;
+                imgEl.onload = () => {
+                    imgEl.classList.remove('opacity-0');
+                    imgEl.parentElement.querySelector('.image-loader-placeholder').classList.add('hidden');
+                };
+            });
+        }
+        
+        function handleChoice(type) {
+            state.scores[type]++;
+            state.currentQuestion++;
+
+            if (state.currentQuestion < quizData.length) {
+                renderQuestion();
+            } else {
+                showScreen('loading');
+                setTimeout(() => {
+                    const result = calculateResult();
+                    renderResult(result);
+                    showScreen('result');
+                }, 2000);
+            }
+        }
+        
+        function resetTest() {
+            state.currentQuestion = 0;
+            state.scores = { spectacle: 0, drama: 0, thriller: 0, comedy: 0, arthouse: 0 };
+            showScreen('start');
+        }
+
+        // --- 공유 기능 함수 ---
+        function copyLink() {
+            const textToCopy = `나의 관극 DNA는 '${resultTitle.textContent}'! 당신의 공연 취향도 알아보세요! \n${window.location.href}`;
+            const textArea = document.createElement('textarea');
+            textArea.value = textToCopy;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+            const originalText = copyLinkBtn.textContent;
+            copyLinkBtn.textContent = '복사 완료!';
+            setTimeout(() => { copyLinkBtn.textContent = originalText; }, 2000);
+        }
+
+        function saveAsImage() {
+            const originalText = saveImageBtn.textContent;
+            saveImageBtn.textContent = '저장 중...';
+            html2canvas(resultCaptureArea, { backgroundColor: '#1f2937', useCORS: true }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = '나의-관극-DNA.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+                saveImageBtn.textContent = originalText;
+            }).catch(err => {
+                console.error('oops, something went wrong!', err);
+                alert('이미지 저장에 실패했습니다.');
+                saveImageBtn.textContent = originalText;
+            });
+        }
+
+        // --- 이벤트 리스너 ---
+        startBtn.addEventListener('click', () => {
+            renderQuestion();
+            showScreen('question');
+        });
+        
+        document.querySelectorAll('.choice-item').forEach(item => {
+            item.addEventListener('click', (event) => {
+                const type = event.currentTarget.dataset.type;
+                if(type) {
+                    handleChoice(type);
+                }
+            });
+        });
+
+        retryBtn.addEventListener('click', resetTest);
+        shareBtn.addEventListener('click', () => shareModal.classList.remove('hidden'));
+        closeModalBtn.addEventListener('click', () => shareModal.classList.add('hidden'));
+        copyLinkBtn.addEventListener('click', copyLink);
+        saveImageBtn.addEventListener('click', saveAsImage);
+
+    </script>
 </body>
 </html>
